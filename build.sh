@@ -7,7 +7,7 @@ mkdir -p rootfs
 
 qemu-debootstrap --arch=armhf zesty rootfs
 
-sudo chown -R root:root files/
+chown -R root:root files/
 cp -a files/* rootfs/
 
 mount --bind /dev rootfs/dev
