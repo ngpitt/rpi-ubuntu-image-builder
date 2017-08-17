@@ -3,12 +3,10 @@
 set -xe
 
 rm -rf rootfs
-mkdir -p rootfs
+cp -a files rootfs
+chown -R root:root rootfs/
 
 qemu-debootstrap --arch=armhf zesty rootfs
-
-chown -R root:root files/
-cp -a files/* rootfs/
 
 mount --bind /dev rootfs/dev
 mount --bind /proc rootfs/proc
