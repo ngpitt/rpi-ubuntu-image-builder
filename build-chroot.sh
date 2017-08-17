@@ -4,9 +4,9 @@ set -xe
 
 locale-gen en_US.UTF-8
 
-apt-get update
-apt-get upgrade -y
-apt-get install -y \
+apt update
+apt upgrade -y
+apt install -y \
   apt-transport-https \
   curl
 
@@ -20,8 +20,8 @@ echo "deb http://archive.raspberrypi.org/debian/ jessie main" > /etc/apt/sources
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
 
-apt-get update
-apt-get install -y \
+apt update
+apt install -y \
   --no-install-recommends \
   firmware-atheros \
   firmware-brcm80211 \
@@ -41,7 +41,7 @@ apt-get install -y \
   bluetooth \
   pi-bluetooth
 
-apt-get install -y \
+apt install -y \
   docker.io \
   kubeadm \
   htop \
@@ -54,7 +54,8 @@ apt-get install -y \
   bash-completion \
   haveged \
   ubuntu-release-upgrader-core \
-  unattended-upgrades
+  unattended-upgrades \
+  btrfs-tools
 
 curl https://raw.githubusercontent.com/lurch/rpi-serial-console/master/rpi-serial-console -o /usr/local/bin/rpi-serial-console
 chmod +x /usr/local/bin/rpi-serial-console
