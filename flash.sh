@@ -36,7 +36,7 @@ sfdisk /dev/mmcblk0 << EOF
 EOF
 
 mkfs.vfat /dev/mmcblk0p1
-mkfs.ext4 /dev/mmcblk0p2
+mkfs.btrfs /dev/mmcblk0p2
 
 mount /dev/mmcblk0p1 /mnt
 cp -a staging-bootfs/* /mnt/

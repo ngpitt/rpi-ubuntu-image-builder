@@ -74,6 +74,8 @@ iface lo inet loopback
 allow-hotplug eth0
 iface eth0 inet dhcp
 " >> /etc/network/interfaces
+echo "btrfs" >> /etc/initramfs-tools/modules
+update-initramfs -c -k $(uname -r)
 
 rm /etc/update-motd.d/10-help-text
 rm /etc/update-motd.d/50-motd-news
@@ -84,4 +86,4 @@ dpkg-reconfigure tzdata
 dpkg-reconfigure resolvconf
 
 apt-get clean
-rm -r /var/lib/apt/lists/* /tmp/* /var/tmp/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
