@@ -75,7 +75,7 @@ allow-hotplug eth0
 iface eth0 inet dhcp
 " >> /etc/network/interfaces
 echo "btrfs" >> /etc/initramfs-tools/modules
-update-initramfs -c -k $(uname -r)
+mkinitramfs 4.4.50-hypriotos-v7+ -o /boot/initramfs7.img
 
 rm /etc/update-motd.d/10-help-text
 rm /etc/update-motd.d/50-motd-news

@@ -27,21 +27,24 @@ umount staging-rootfs/dev
 
 rm staging-rootfs/usr/bin/qemu-arm-static
 
-umount /dev/mmcblk0p1
-umount /dev/mmcblk0p2
+umount $3?* || /bin/true
 
-sfdisk /dev/mmcblk0 << EOF
+sfdisk $3 << EOF
 ,131072,c
 ,,83
 EOF
+partprobe
 
-mkfs.vfat /dev/mmcblk0p1
-mkfs.btrfs /dev/mmcblk0p2
+BOOT_PART=$(fdisk -l $3 | grep ^$3 | awk '{print $1}' | sed -n 1p)
+ROOT_PART=$(fdisk -l $3 | grep ^$3 | awk '{print $1}' | sed -n 2p)
 
-mount /dev/mmcblk0p1 /mnt
+mkfs.vfat $BOOT_PART
+mkfs.btrfs -f $ROOT_PART
+
+mount $BOOT_PART /mnt
 cp -a staging-bootfs/* /mnt/
 umount /mnt
 
-mount /dev/mmcblk0p2 /mnt
+mount $ROOT_PART /mnt
 cp -a staging-rootfs/* /mnt/
 umount /mnt

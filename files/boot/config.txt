@@ -1,3 +1,6 @@
+initramfs initramfs7.img followkernel
+kernel=kernel7.img
+
 hdmi_force_hotplug=1
 enable_uart=1
 
