@@ -3,7 +3,7 @@
 set -xe
 
 rm -rf rootfs
-rm -rm staging-files
+rm -rf staging-files
 mkdir -p rootfs
 mkdir -p staging-files
 
