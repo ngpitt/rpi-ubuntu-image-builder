@@ -3,11 +3,15 @@
 set -xe
 
 rm -rf rootfs
-cp -a files rootfs
-chown -R root:root rootfs/
+rm -rm staging-files
+mkdir -p rootfs
+mkdir -p staging-files
 
 qemu-debootstrap --arch=armhf zesty rootfs
 
+cp -a files/* staging-files/
+chown -R root:root staging-files/
+cp -a staging-files/* rootfs/
 cp /etc/resolv.conf rootfs/etc/resolv.conf
 
 mount --bind /dev rootfs/dev
