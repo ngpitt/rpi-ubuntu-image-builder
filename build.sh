@@ -8,6 +8,8 @@ chown -R root:root rootfs/
 
 qemu-debootstrap --arch=armhf zesty rootfs
 
+cp /etc/resolv.conf rootfs/etc/resolv.conf
+
 mount --bind /dev rootfs/dev
 mount --bind /proc rootfs/proc
 mount --bind /sys rootfs/sys
