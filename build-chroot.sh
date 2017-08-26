@@ -67,7 +67,6 @@ systemctl enable docker
 systemctl enable haveged
 systemctl enable ntp
 
-sed -i "s/    HashKnownHosts yes/#   HashKnownHosts yes/g" /etc/ssh/ssh_config
 echo "
 auto lo
 iface lo inet loopback
@@ -76,6 +75,8 @@ allow-hotplug eth0
 iface eth0 inet dhcp
 " >> /etc/network/interfaces
 echo "btrfs" >> /etc/initramfs-tools/modules
+sed -i "s/%sudo	ALL=(ALL:ALL) ALL/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g" /etc/sudoers
+sed -i "s/    HashKnownHosts yes/#   HashKnownHosts yes/g" /etc/ssh/ssh_config
 mkinitramfs 4.4.50-hypriotos-v7+ -o /boot/initramfs7.img
 
 rm /etc/update-motd.d/10-help-text
