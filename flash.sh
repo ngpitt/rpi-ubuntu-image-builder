@@ -3,7 +3,7 @@
 set -xe
 
 apt update
-apt install -y
+apt install -y \
   dosfstools \
   btrfs-tools
 
