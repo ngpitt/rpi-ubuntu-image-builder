@@ -3,18 +3,18 @@
 set -xe
 
 function mount_filesystems {
-    mount --bind /dev rootfs/dev
-    mount --bind /proc rootfs/proc
-    mount --bind /sys rootfs/sys
+    mount --bind /dev $1/dev
+    mount --bind /proc $1/proc
+    mount --bind /sys $1/sys
 }
 
 function unmount_filesystems {
-    umount rootfs/sys
-    umount rootfs/proc
-    umount rootfs/dev
+    umount $1/sys
+    umount $1/proc
+    umount $1/dev
 }
 
 mount_filesystems
 trap unmount_filesystems EXIT
 
-chroot rootfs
+chroot $1 $2

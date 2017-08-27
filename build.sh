@@ -2,6 +2,11 @@
 
 set -xe
 
+apt update
+apt install -y
+  debootstrap \
+  qemu-user-static
+
 rm -rf rootfs
 rm -rf staging-files
 mkdir -p rootfs
@@ -12,14 +17,8 @@ qemu-debootstrap --arch=armhf zesty rootfs
 cp -a files/* staging-files/
 chown -R root:root staging-files/
 cp -a staging-files/* rootfs/
-cp /etc/resolv.conf rootfs/etc/resolv.conf
+cp /etc/resolv.conf rootfs/etc/
 
-mount --bind /dev rootfs/dev
-mount --bind /proc rootfs/proc
-mount --bind /sys rootfs/sys
-
-chroot rootfs /bin/bash < build-chroot.sh
-
-umount rootfs/sys
-umount rootfs/proc
-umount rootfs/dev
+cp build-chroot.sh rootfs/
+./chroot.sh rootfs "./build-chroot.sh"
+rm rootfs/build-chroot.sh
