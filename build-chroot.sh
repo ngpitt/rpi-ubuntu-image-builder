@@ -88,7 +88,6 @@ rm /etc/update-motd.d/50-motd-news
 rm /etc/ssh/ssh_host_*
 
 dpkg-reconfigure tzdata
-dpkg-reconfigure resolvconf
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

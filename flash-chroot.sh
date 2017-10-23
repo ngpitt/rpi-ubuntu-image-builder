@@ -8,3 +8,5 @@ adduser $2
 usermod -a -G sudo $2
 
 dpkg-reconfigure openssh-server
+
+rm /etc/resolv.conf

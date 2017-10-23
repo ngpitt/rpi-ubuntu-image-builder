@@ -14,7 +14,7 @@ function unmount_filesystems {
     umount $1/dev
 }
 
-mount_filesystems
-trap unmount_filesystems EXIT
+mount_filesystems $1
+trap "unmount_filesystems $1" EXIT
 
 chroot $1 $2
