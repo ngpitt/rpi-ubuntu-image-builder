@@ -23,7 +23,7 @@ mv staging-rootfs/boot/* staging-bootfs/
 umount $3?* || /bin/true
 
 sfdisk $3 << EOF
-,131072,c
+,409600,c
 ,,83
 EOF
 partprobe

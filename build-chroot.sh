@@ -55,7 +55,9 @@ apt install -y \
   haveged \
   ubuntu-release-upgrader-core \
   unattended-upgrades \
-  btrfs-tools
+  btrfs-tools \
+  dnsutils \
+  screen
 
 curl https://raw.githubusercontent.com/lurch/rpi-serial-console/master/rpi-serial-console -o /usr/local/bin/rpi-serial-console
 chmod +x /usr/local/bin/rpi-serial-console
@@ -84,7 +86,6 @@ mkinitramfs 4.4.50-hypriotos-v7+ -o /boot/initramfs7.img
 rm /etc/update-motd.d/10-help-text
 rm /etc/update-motd.d/50-motd-news
 rm /etc/ssh/ssh_host_*
-rm /lib/systemd/system/motd*
 
 dpkg-reconfigure tzdata
 dpkg-reconfigure resolvconf

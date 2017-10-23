@@ -12,7 +12,7 @@ rm -rf staging-files
 mkdir -p rootfs
 mkdir -p staging-files
 
-qemu-debootstrap --arch=armhf zesty rootfs
+qemu-debootstrap --arch=armhf artful rootfs
 
 cp -a files/* staging-files/
 chown -R root:root staging-files/
