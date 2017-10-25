@@ -17,6 +17,9 @@ deb https://packagecloud.io/Hypriot/Schatzkiste/debian/ jessie main" > /etc/apt/
 curl http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
 echo "deb http://archive.raspberrypi.org/debian/ jessie main" > /etc/apt/sources.list.d/raspberrypi.list
 
+curl https://download.docker.com/linux/raspbian/gpg | sudo apt-key add -
+echo "deb [arch=armhf] https://download.docker.com/linux/raspbian jessie stable" > /etc/apt/sources.list.d/docker.list
+
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
 
@@ -39,10 +42,10 @@ apt install -y \
   ethtool \
   crda \
   bluetooth \
-  pi-bluetooth
+  pi-bluetooth \
+  docker-ce
 
 apt install -y \
-  docker.io \
   kubeadm \
   htop \
   iotop \
