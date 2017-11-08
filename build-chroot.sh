@@ -58,7 +58,6 @@ apt install -y \
   haveged \
   ubuntu-release-upgrader-core \
   unattended-upgrades \
-  btrfs-tools \
   dnsutils \
   screen
 
