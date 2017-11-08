@@ -4,8 +4,7 @@ set -xe
 
 apt update
 apt install -y \
-  dosfstools \
-  btrfs-tools
+  dosfstools
 
 rm -rf staging-bootfs
 rm -rf staging-rootfs
@@ -32,7 +31,7 @@ BOOT_PART=$(fdisk -l $3 | grep ^$3 | awk '{print $1}' | sed -n 1p)
 ROOT_PART=$(fdisk -l $3 | grep ^$3 | awk '{print $1}' | sed -n 2p)
 
 mkfs.vfat $BOOT_PART
-mkfs.btrfs -f $ROOT_PART
+mkfs.ext4 $ROOT_PART
 
 mount $BOOT_PART /mnt
 cp -a staging-bootfs/* /mnt/
