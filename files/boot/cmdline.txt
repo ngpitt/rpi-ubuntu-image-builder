@@ -1,1 +1,1 @@
-+dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 cgroup_memory=1 swapaccount=1 elevator=deadline fsck.repair=yes rootwait console=serial0,115200 net.ifnames=0 biosdevname=0 nomodeset
+console=tty1 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait elevator=deadline fsck.repair=yes cgroup_memory=1 swapaccount=1 dwc_otg.lpm_enable=0 net.ifnames=0 biosdevname=0 nomodeset
