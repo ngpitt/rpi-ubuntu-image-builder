@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+. utils
+
+resolve-layer 4
+echo-build-start 5
+
+sudo rm -rf layer5
+sudo mkdir layer5
+mount-layer 5
+sudo rm rootfs/usr/bin/qemu-arm-static
+
+echo-build-end 5

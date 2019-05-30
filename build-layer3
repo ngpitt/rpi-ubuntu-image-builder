@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+. utils
+
+resolve-layer 2
+echo-build-start 3
+
+sudo rm -rf layer3
+sudo mkdir layer3
+sudo cp provisioners/provision-layer3 layer3
+./chroot -l 3 -c /provision-layer3
+sudo rm layer3/provision-layer3
+
+echo-build-end 3

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+. utils
+
+while true; do
+    read -p "FQDN: " FQDN
+    [[ -z "$FQDN" ]] && echo "Invalid FQDN." || break
+done
+
+while true; do
+    read -p "Username: " USERNAME
+    [[ -z "$USERNAME" ]] && echo "Invalid username." || break
+done
+
+resolve-layer 3
+echo-build-start 4
+
+sudo rm -rf layer4
+sudo mkdir layer4
+sudo cp provisioners/provision-layer4 layer4
+./chroot -l 4 -c "/provision-layer4 $FQDN $USERNAME"
+sudo rm layer4/provision-layer4
+
+echo-build-end 4

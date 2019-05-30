@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+. utils
+
+resolve-packages debootstrap qemu-user-static
+echo-build-start 1
+
+sudo rm -rf layer0 layer1
+sudo mkdir layer0 layer1
+mount-layer 1
+sudo qemu-debootstrap --arch=armhf disco rootfs
+
+echo-build-end 1

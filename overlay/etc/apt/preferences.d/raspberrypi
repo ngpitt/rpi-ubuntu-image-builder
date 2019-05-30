@@ -1,0 +1,3 @@
+Package: firmware-*
+Pin: origin archive.raspberrypi.org
+Pin-Priority: 750

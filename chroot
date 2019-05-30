@@ -1,0 +1,37 @@
+#!/bin/bash
+
+LAYER=""
+COMMAND=""
+
+while getopts l:c: FLAG; do
+    case $FLAG in
+    l)
+        LAYER="$OPTARG"
+        ;;
+    c)
+        COMMAND="$OPTARG"
+        ;;
+    *)
+        echo << EOF
+Usage: $0 -l layer -c command
+
+    -l layer    Layer to mount
+    -c command  Command to run within the target filesystem
+
+EOF
+>&2
+        exit 1
+        ;;
+    esac
+done
+
+[[ -z "$LAYER" ]] && { echo "Layer (-l) not specified." >&2; exit 1; }
+[[ -z "$COMMAND" ]] && { echo "Command (-c) not specified." >&2; exit 1; }
+
+set -e
+. utils
+
+mount-layer $LAYER
+mount-host-filesystems
+sudo cp /etc/resolv.conf rootfs/etc
+sudo chroot rootfs /bin/su -lc "$COMMAND"

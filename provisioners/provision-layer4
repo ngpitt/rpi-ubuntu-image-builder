@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+FQDN="$1"
+USERNAME="$2"
+HOSTNAME="${FQDN%%.*}"
+
+sed -i "s/fqdn/$FQDN/g" /etc/hosts
+sed -i "s/hostname/$HOSTNAME/g" /etc/hosts /etc/hostname
+
+adduser "$USERNAME"
+usermod -a -G sudo "$USERNAME"
+
+dpkg-reconfigure openssh-server

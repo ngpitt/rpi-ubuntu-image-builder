@@ -1,0 +1,49 @@
+#!/bin/bash
+
+echo-message() {
+    cat << EOF
+===
+=== $1
+===
+EOF
+}
+
+echo-build-start() {
+    echo-message "Building layer $1"
+}
+
+echo-build-end() {
+    echo-message "Layer $1 complete"
+}
+
+resolve-layer() {
+    [[ ! -d "layer$1" ]] && "./build-layer$1"
+    return 0
+}
+
+resolve-packages() {
+    local MISSING_PACKAGES=""
+    for i in "$@"; do
+        { dpkg -s $i &> /dev/null; local EXIT_CODE=$?; } || true
+        [[ $EXIT_CODE -ne 0 ]] && { [[ -z $MISSING_PACKAGES ]] && MISSING_PACKAGES="$i" || MISSING_PACKAGES="$MISSING_PACKAGES $i"; }
+    done
+    [[ ! -z "$MISSING_PACKAGES" ]] && sudo apt install $MISSING_PACKAGES -y
+    return 0
+}
+
+mount-layer() {
+    local LOWER_LAYERS=""
+    for i in $(seq 0 $(($1 - 1))); do
+        [[ -z "$LOWER_LAYERS" ]] && LOWER_LAYERS="layer$i" || LOWER_LAYERS="layer$i:$LOWER_LAYERS"
+    done
+    sudo rm -rf workfs rootfs
+    sudo mkdir workfs rootfs
+    sudo mount -t overlay overlay -o lowerdir=$LOWER_LAYERS,upperdir=layer$1,workdir=workfs rootfs
+    trap "sudo umount -R rootfs" INT TERM EXIT
+}
+
+mount-host-filesystems() {
+    sudo mount --bind /dev "rootfs/dev"
+    sudo mount --bind /proc "rootfs/proc"
+    sudo mount --bind /sys "rootfs/sys"
+}

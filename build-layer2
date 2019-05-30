@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+. utils
+
+resolve-layer 1
+echo-build-start 2
+
+sudo rm -rf layer2
+sudo cp -a overlay layer2
+sudo chown -R root:root layer2
+
+echo-build-end 2

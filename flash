@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+. utils
+
+while true; do
+    read -p "Device: " DEVICE
+    [[ -z "$DEVICE" ]] && echo "Invalid device." || break
+done
+
+resolve-layer 5
+resolve-packages fdisk parted dosfstools e2fsprogs
+echo-message "Flashing layer 5 to $DEVICE"
+
+sudo umount $DEVICE?* || true
+sudo sfdisk $DEVICE << EOF
+,409600,c
+,,83
+EOF
+sudo partprobe
+
+BOOT_PART=$(sudo fdisk -l $DEVICE | grep ^$DEVICE | awk '{print $1}' | sed -n 1p)
+ROOT_PART=$(sudo fdisk -l $DEVICE | grep ^$DEVICE | awk '{print $1}' | sed -n 2p)
+
+sudo mkfs.vfat $BOOT_PART
+sudo mkfs.ext4 $ROOT_PART
+
+sudo rm -rf devfs
+sudo mkdir devfs
+sudo mount $ROOT_PART devfs
+sudo mkdir devfs/boot
+sudo mount $BOOT_PART devfs/boot
+mount-layer 5
+sudo cp -a rootfs/* devfs
+sudo umount devfs/boot
+sudo umount devfs
+
+echo-message "Flashing complete"
