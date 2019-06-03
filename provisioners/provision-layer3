@@ -2,6 +2,8 @@
 
 set -e
 
+K8S_VERSION="1.13.6-00"
+
 locale-gen en_US.UTF-8
 c_rehash /etc/ssl/certs
 
@@ -34,7 +36,9 @@ apt install -y \
   iftop \
   ifupdown \
   iotop \
-  kubeadm \
+  kubeadm=$K8S_VERSION \
+  kubectl=$K8S_VERSION \
+  kubelet=$K8S_VERSION \
   net-tools \
   openssh-server \
   screen \
@@ -42,6 +46,10 @@ apt install -y \
   unattended-upgrades \
   vim \
   vlan
+sudo apt-mark hold \
+  kubeadm \
+  kubectl \
+  kubelet
 
 systemctl disable syslog
 systemctl disable motd-news.service
